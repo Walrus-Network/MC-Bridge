@@ -1,4 +1,4 @@
-require "plugin"
+require_relative "plugin"
 
 # Represents a local Minecraft server in a Docker container.
 class LocalServer

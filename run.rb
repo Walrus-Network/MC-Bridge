@@ -1,5 +1,5 @@
 # Require nessecary libraries for the server
-require "server"
+require_relative "server"
 require "json"
 
 # Load the local server
