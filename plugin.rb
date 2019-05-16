@@ -1,4 +1,4 @@
-require "environment"
+require_relative "environment"
 require "yaml"
 require "fileutils"
 
