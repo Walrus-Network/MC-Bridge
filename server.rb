@@ -69,12 +69,12 @@ class LocalServer
       )
     end
     unless components.empty?
-      comp_path = "#{path}/plugins/GamesCore/components/"
+      comp_path = "#{path}/plugins/GameManager/components/"
       unless File.directory?(comp_path)
         FileUtils.mkdir_p(comp_path)
       end
       components.each do |component|
-        FileUtils.copy_entry(component[:path], "#{path}/plugins/GamesCore/components/#{component[:name]}.jar")
+        FileUtils.copy_entry(component[:path], "#{path}/plugins/GameManager/components/#{component[:name]}.jar")
       end
     end
     env.each{|k,v| Env.set(k, v.to_s, true)}
