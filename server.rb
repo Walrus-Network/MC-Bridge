@@ -51,9 +51,9 @@ class LocalServer
   # Move over files from the data folder, format plugin configuration files,
   # ensure at least one map available, and inject server variables into text-based files.
   def load!
-    dirname = "#{path}/plugins"
-    unless File.directory?(dirname)
-      FileUtils.mkdir_p(dirname)
+    plug_path = "#{path}/plugins"
+    unless File.directory?(plug_path)
+      FileUtils.mkdir_p(plug_path)
     end
     for folder in ["base", load_path]
       FileUtils.copy_entry("/data/servers/#{folder}", "#{path}")
@@ -68,8 +68,14 @@ class LocalServer
         "#{path}/plugins"
       )
     end
-    components.each do |component|
-      FileUtils.copy_entry(component[:path], "#{path}/plugins/GamesCore/components/#{component[:name]}.jar")
+    unless components.empty?
+      comp_path = "#{path}/plugins/GamesCore/components/"
+      unless File.directory?(comp_path)
+        FileUtils.mkdir_p(comp_path)
+      end
+      components.each do |component|
+        FileUtils.copy_entry(component[:path], "#{path}/plugins/GamesCore/components/#{component[:name]}.jar")
+      end
     end
     env.each{|k,v| Env.set(k, v.to_s, true)}
     for file in ["yml", "yaml", "json", "properties"].flat_map{|ext| Dir.glob("#{path}/**/*.#{ext}")}
