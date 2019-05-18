@@ -51,6 +51,10 @@ class LocalServer
   # Move over files from the data folder, format plugin configuration files,
   # ensure at least one map available, and inject server variables into text-based files.
   def load!
+    dirname = "#{path}/plugins"
+    unless File.directory?(dirname)
+      FileUtils.mkdir_p(dirname)
+    end
     for folder in ["base", load_path]
       FileUtils.copy_entry("/data/servers/#{folder}", "#{path}")
     end
