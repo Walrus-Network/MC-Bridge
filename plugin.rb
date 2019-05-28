@@ -27,7 +27,8 @@ class Plugin
       file = f if name.downcase == File.basename(f, ".*").downcase
     end
     unless file
-      return load!("#{File.dirname(folder)}/base") if folder != "base"
+      puts "Loading from #{folder}..."
+      return load!("#{File.dirname(folder)}/base") unless folder.include?("base")
       raise "Unable to find config #{name.downcase} in folder #{folder}"
     end
     config = if (ext = File.extname(file)) == ".yml"
