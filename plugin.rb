@@ -36,7 +36,6 @@ class Plugin
     else
       {"lines" => File.read(file).to_s}
     end
-    puts "Loading #{file}... (#{config})"
     if parent = config["parent"]
       config = load!("#{File.dirname(folder)}/#{parent}").deep_merge(config)
     end

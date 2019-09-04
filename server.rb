@@ -1,4 +1,5 @@
 require_relative "plugin"
+require "json"
 
 # Represents a local Minecraft server in a Docker container.
 class LocalServer
@@ -35,17 +36,26 @@ class LocalServer
 
   # Array of {name: '', jar_path: ''} hashes denoting plugins to be loaded
   def plugins
-    data[:plugins].nil? ? [] : data[:plugins]
+    data[:plugins].nil? ? [] : data[:plugins].map { |pl| JSON.parse(pl) }
   end
 
   # Games external components to load in an array of {path: '', name: ''} hashes
   def components
-    data[:components].nil? ? [] : data[:components]
+    data[:components].nil? ? [] : data[:components].map { |comp| JSON.parse(comp)  }
   end
 
   # Environment variables
   def env
     data[:env].nil? ? {} : data[:env]
+  end
+
+  def describe
+    "Load Path: #{load_path}\n" +
+    "Plugins Path: #{plugins_path}\n" +
+    "Remote Files: #{remote_files}\n" +
+    "Plugins: #{plugins}\n" +
+    "Components: #{components}\n" +
+    "Environment: #{env}"
   end
 
   # Move over files from the data folder, format plugin configuration files,
